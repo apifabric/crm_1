@@ -1,0 +1,109 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Address {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    street VARCHAR 
+    city VARCHAR 
+    state VARCHAR 
+    zip_code VARCHAR 
+    country VARCHAR 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    first_name VARCHAR 
+    last_name VARCHAR 
+    email VARCHAR 
+    phone VARCHAR 
+    created_at DATETIME 
+    }
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    }
+
+Table CustomerServiceTicket {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    issue_description TEXT 
+    opened_date DATETIME 
+    closed_date DATETIME 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    first_name VARCHAR 
+    last_name VARCHAR 
+    email VARCHAR 
+    phone VARCHAR 
+    hire_date DATETIME 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    order_date DATETIME 
+    shipped_date DATETIME 
+    status VARCHAR 
+    }
+
+Table OrderDetail {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    unit_price FLOAT 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    price FLOAT 
+    created_at DATETIME 
+    }
+
+Table Payment {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    amount FLOAT 
+    payment_date DATETIME 
+    method VARCHAR 
+    }
+
+Table ProductCategory {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    category_id INTEGER 
+    }
+
+Table Stock {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    phone VARCHAR 
+    email VARCHAR 
+    contact_name VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Address.(customer_id) < Customer.(id)
+    Ref: CustomerServiceTicket.(customer_id) < Customer.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: OrderDetail.(order_id) < Order.(id)
+    Ref: OrderDetail.(product_id) < Product.(id)
+    Ref: Payment.(order_id) < Order.(id)
+    Ref: ProductCategory.(category_id) < Category.(id)
+    Ref: ProductCategory.(product_id) < Product.(id)
+    Ref: Stock.(product_id) < Product.(id)

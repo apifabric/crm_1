@@ -1,0 +1,46 @@
+<o-form-layout-manager attr="CustomerServiceTicket" mode="tab" title="CUSTOMERSERVICETICKET">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="CustomerServiceTicketTable" 
+            service="CustomerServiceTicket" 
+            entity="CustomerServiceTicket" 
+            title="CUSTOMERSERVICETICKET"
+            keys="id"
+            columns="issue_description;customer_id;opened_date;closed_date;id" 
+            header-actions="R;D"
+            visible-columns="issue_description;customer_id;opened_date;closed_date;id"  
+            sort-columns="issue_description" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #issue_description attr="issue_description" title=" issue_description*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;first_name"
+        parent-keys="id:customer_id"
+        value-column="first_name" keys="customer_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #opened_date attr="opened_date" type="timestamp" label="opened_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-date-input #closed_date attr="closed_date" type="timestamp" label="closed_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

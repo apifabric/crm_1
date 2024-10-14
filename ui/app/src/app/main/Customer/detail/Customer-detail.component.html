@@ -1,0 +1,192 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="first_name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Customer_form_edit" 
+        service="Customer" 
+        entity="Customer" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #first_name attr="first_name" label=" first_name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #last_name attr="last_name" label="last_name" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #phone attr="phone" label="phone" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-date-input #created_at attr="created_at" type="date" label="created_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="ADDRESS-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="AddressTable" 
+        service="Address" 
+        entity="Address" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="id;customer_id;street;city;state;zip_code;country"  
+        horizontal-scroll="yes"
+        detail-form-route="Address" 
+        edit-form-route="Address"
+        visible-columns="id;customer_id;street;city;state;zip_code;country"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;first_name"
+        parent-keys="id:customer_id"
+        value-column="first_name" keys="customer_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #street attr="street" title="street" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #city attr="city" title="city" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #state attr="state" title="state" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #zip_code attr="zip_code" title="zip_code" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #country attr="country" title="country" editable="no" required="yes" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="CUSTOMERSERVICETICKET-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="CustomerServiceTicketTable" 
+        service="CustomerServiceTicket" 
+        entity="CustomerServiceTicket" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="issue_description;customer_id;opened_date;closed_date;id"  
+        horizontal-scroll="yes"
+        detail-form-route="CustomerServiceTicket" 
+        edit-form-route="CustomerServiceTicket"
+        visible-columns="issue_description;customer_id;opened_date;closed_date;id"  
+        sort-columns="issue_description" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #issue_description attr="issue_description" title=" issue_description*" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;first_name"
+        parent-keys="id:customer_id"
+        value-column="first_name" keys="customer_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #opened_date attr="opened_date" type="timestamp" label="opened_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #closed_date attr="closed_date" type="timestamp" label="closed_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="ORDER-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="OrderTable" 
+        service="Order" 
+        entity="Order" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="id;customer_id;order_date;shipped_date;status"  
+        horizontal-scroll="yes"
+        detail-form-route="Order" 
+        edit-form-route="Order"
+        visible-columns="id;customer_id;order_date;shipped_date;status"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;first_name"
+        parent-keys="id:customer_id"
+        value-column="first_name" keys="customer_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #order_date attr="order_date" type="timestamp" label="order_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #shipped_date attr="shipped_date" type="timestamp" label="shipped_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #status attr="status" title="status" editable="no" required="yes" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

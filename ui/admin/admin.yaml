@@ -1,0 +1,338 @@
+about:
+  date: October 14, 2024 19:27:14
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 9
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Address:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: street
+      required: true
+    - name: city
+      required: true
+    - name: state
+      required: true
+    - name: zip_code
+      required: true
+    - name: country
+      required: true
+    description: Table storing addresses for customers.
+    info_list: Table storing addresses for customers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Address
+    user_key: id
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: id
+    description: Table storing product categories.
+    info_list: Table storing product categories.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductCategoryList
+      resource: ProductCategory
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: email
+      required: true
+    - name: phone
+    - name: created_at
+    - name: id
+    description: Table storing customer data.
+    info_list: Table storing customer data.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: AddressList
+      resource: Address
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CustomerServiceTicketList
+      resource: CustomerServiceTicket
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    type: Customer
+    user_key: first_name
+  CustomerServiceTicket:
+    attributes:
+    - label: ' issue_description*'
+      name: issue_description
+      required: true
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: opened_date
+    - name: closed_date
+    - name: id
+    description: Table storing customer service tickets.
+    info_list: Table storing customer service tickets.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: CustomerServiceTicket
+    user_key: issue_description
+  Employee:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: email
+      required: true
+    - name: phone
+    - name: hire_date
+    - name: id
+    description: Table storing employee information.
+    info_list: Table storing employee information.
+    type: Employee
+    user_key: first_name
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: order_date
+    - name: shipped_date
+    - name: status
+      required: true
+    description: Table storing order data.
+    info_list: Table storing order data.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  OrderDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+      required: true
+    - name: product_id
+      required: true
+    - name: quantity
+      required: true
+    - name: unit_price
+      required: true
+    description: Table storing details of each order.
+    info_list: Table storing details of each order.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+    user_key: id
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+      required: true
+    - name: amount
+      required: true
+    - name: payment_date
+    - name: method
+      required: true
+    description: Table storing payment details for orders.
+    info_list: Table storing payment details for orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: price
+      required: true
+    - name: created_at
+    - name: id
+    description: Table storing product data.
+    info_list: Table storing product data.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductCategoryList
+      resource: ProductCategory
+    - direction: tomany
+      fks:
+      - product_id
+      name: StockList
+      resource: Stock
+    type: Product
+    user_key: name
+  ProductCategory:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: category_id
+      required: true
+    - name: product_id
+      required: true
+    description: Association table for products and categories.
+    info_list: Association table for products and categories.
+    tab_groups:
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: ProductCategory
+    user_key: id
+  Stock:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+      required: true
+    - name: quantity
+      required: true
+    description: Table for managing product stock.
+    info_list: Table for managing product stock.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Stock
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: phone
+    - name: email
+    - name: contact_name
+    - name: id
+    description: Table storing supplier data.
+    info_list: Table storing supplier data.
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

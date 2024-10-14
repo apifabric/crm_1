@@ -1,0 +1,532 @@
+about:
+  date: October 14, 2024 19:27:14
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Address:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: street
+      required: true
+      template: text
+      type: VARCHAR
+    - name: city
+      required: true
+      template: text
+      type: VARCHAR
+    - name: state
+      required: true
+      template: text
+      type: VARCHAR
+    - name: zip_code
+      required: true
+      template: text
+      type: VARCHAR
+    - name: country
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table storing addresses for customers.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table storing addresses for customers.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Address
+  Category:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: TEXT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table storing product categories.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table storing product categories.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductCategoryList
+      resource: ProductCategory
+    type: Category
+  Customer:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: phone
+      template: text
+      type: VARCHAR
+    - name: created_at
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table storing customer data.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    home_template: home_template.html
+    info_list: Table storing customer data.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: AddressList
+      resource: Address
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CustomerServiceTicketList
+      resource: CustomerServiceTicket
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    type: Customer
+  CustomerServiceTicket:
+    columns:
+    - label: ' issue_description*'
+      name: issue_description
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: TEXT
+    - name: customer_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: opened_date
+      template: date
+      type: DATETIME
+    - name: closed_date
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table storing customer service tickets.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: issue_description
+    home_template: home_template.html
+    info_list: Table storing customer service tickets.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: CustomerServiceTicket
+  Employee:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: phone
+      template: text
+      type: VARCHAR
+    - name: hire_date
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table storing employee information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    home_template: home_template.html
+    info_list: Table storing employee information.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Employee
+  Order:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: order_date
+      template: date
+      type: DATETIME
+    - name: shipped_date
+      template: date
+      type: DATETIME
+    - name: status
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table storing order data.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table storing order data.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+  OrderDetail:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: product_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: unit_price
+      required: true
+      template: real
+      type: FLOAT
+    description: Table storing details of each order.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table storing details of each order.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+  Payment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: amount
+      required: true
+      template: real
+      type: FLOAT
+    - name: payment_date
+      template: date
+      type: DATETIME
+    - name: method
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table storing payment details for orders.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table storing payment details for orders.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+  Product:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: TEXT
+    - name: price
+      required: true
+      template: real
+      type: FLOAT
+    - name: created_at
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table storing product data.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table storing product data.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductCategoryList
+      resource: ProductCategory
+    - direction: tomany
+      fks:
+      - product_id
+      name: StockList
+      resource: Stock
+    type: Product
+  ProductCategory:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: category_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: product_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Association table for products and categories.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Association table for products and categories.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: ProductCategory
+  Stock:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: product_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    description: Table for managing product stock.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for managing product stock.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Stock
+  Supplier:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: phone
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: contact_name
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table storing supplier data.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table storing supplier data.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Supplier
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false
